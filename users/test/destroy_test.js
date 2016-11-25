@@ -32,12 +32,24 @@ describe('Deleting a user', () => {
 				});
 	});
 
-	it('Class method findAndRemove', () => {
-		
+	it('Class method findOneAndRemove', (done) => {
+		User.findOneAndRemove({ name: 'David' })
+			// highly reusable promise
+			.then(() => User.findOne({ name: 'David' }))
+				.then((user) => {
+					assert(user === null);
+					done();
+				});
 	});
 
-	it('Class method findByIdAndRemove', () => {
-		
+	it('Class method findByIdAndRemove', (done) => {
+		User.findByIdAndRemove(david._id)
+			// highly reusable promise
+			.then(() => User.findOne({ name: 'David' }))
+				.then((user) => {
+					assert(user === null);
+					done();
+				});
 	});
 
 });
