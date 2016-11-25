@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "nodemon --exec 'mocha -R min'"  // watches and cleans up the test runner
+    "test": "nodemon --exec 'mocha -R min'" 
   },
   "author": "David Anthony Puerto",
   "license": "ISC",
