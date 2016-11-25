@@ -13,6 +13,7 @@ describe('Deleting a user', () => {
 
 	it('Model instance remove', (done) => {
 		david.remove()
+			// highly reusable promise
 			.then(() => User.findOne({ name: 'David' }))
 			.then((user) => {
 				assert(user === null);
@@ -20,8 +21,15 @@ describe('Deleting a user', () => {
 			});
 	});
 
-	it('Class method remove', () => {
-		
+	it('Class method remove', (done) => {
+		// Remove a bunch of a records within a given criteria
+		User.remove({ name: 'David' })
+			// highly reusable promise
+			.then(() => User.findOne({ name: 'David' }))
+				.then((user) => {
+					assert(user === null);
+					done();
+				});
 	});
 
 	it('Class method findAndRemove', () => {
