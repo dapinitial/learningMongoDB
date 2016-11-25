@@ -10,6 +10,9 @@ These instructions will get you a copy of the project up and running on your loc
 
 What things you need to install the software and how to install them
 
+*** I'm playing with Robomongo as well to view MongoDB with a GUI! ***
+
+
 ```
 Homebrew
 NodeJS/NPM
