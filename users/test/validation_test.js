@@ -21,4 +21,14 @@ describe('Validating records', () => {
 
 	});
 
+	it('Disallows invalid record from being saved to Mongo.', (done) => {
+		const user = new User({ name: 'A' });
+		user.save()
+			.catch((validationResult) => {
+				const { message } = validationResult.errors.name;
+				assert(message === 'Name must be longer than 1 character.');
+				done();
+			});
+	});
+
 });
