@@ -45,7 +45,11 @@ describe('Subdocuments', () => {
 				const post = user.posts[0];
 				post.remove();
 				return user.save();
+			})
+			.then(() => User.findOne({ name: 'David' }))
+			.then((user) => {
+				assert(user.posts.length === 0);
+				done();
 			});
-			done();
 	});
 });
