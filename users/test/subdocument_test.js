@@ -42,7 +42,9 @@ describe('Subdocuments', () => {
 		david.save()
 			.then(() => User.findOne({ name: 'David' }))
 			.then((user) => {
-				user.posts[0].remove();
+				const post = user.posts[0];
+				post.remove();
+				return user.save();
 			});
 			done();
 	});
