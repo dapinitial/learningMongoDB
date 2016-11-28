@@ -11,7 +11,26 @@ describe('Subdocuments', () => {
 			.then(() => User.findOne({ name: 'David' }))
 			.then((user) => {
 				assert(user.posts[0].title === 'PostTitle');
-		done();
-		});
+			});
+			done();
 	});
+
+	it('Can add subdocument to an existing record.', (done) => {
+		const david = new User({ 
+			name: 'David',
+			posts: [] 
+		});
+
+		david.save()
+			.then(() => User.findOne({ name: 'David' }))
+			.then((user) => {
+				user.posts.push({ title: 'New Post' });
+				return user.save();
+			})
+			.then(() => User.findOne({ name: 'Joe' }))
+			.then((user) => {
+				assert(user.posts[0].title === 'New Post');
+			});
+			done();
+		});
 });
