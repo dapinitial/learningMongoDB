@@ -33,4 +33,17 @@ describe('Subdocuments', () => {
 			});
 			done();
 		});
+
+	it('Can remove an existing subdocument.', (done) => {
+		const david = new User({ 
+			name: 'David',
+			posts: [{title: 'PostTitle'}]
+		});
+		david.save()
+			.then(() => User.findOne({ name: 'David' }))
+			.then((user) => {
+				user.posts[0].remove();
+			});
+			done();
+	});
 });
