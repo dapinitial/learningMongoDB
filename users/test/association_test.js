@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const assert = require('assert');
 const User = require('../src/user');
 const Comment = require('../src/comment');
 const BlogPost = require('../src/blogPost');
@@ -10,12 +11,11 @@ describe('Associations', () => {
 	beforeEach((done) => {
 
 		david = new User({ name: 'David' });
-		blogPost = new BlogPost({ title: 'JS is great', content: 'Yep, it really is!' });
+		blogPost = new BlogPost({ title: 'JS is great', content: 'Yep, it really is' });
 		comment = new Comment({ content: 'Congrats on a great post!' });
 
 		david.blogPosts.push(blogPost);
 		blogPost.comments.push(comment);
-
 		comment.user = david;
 
 		Promise.all([ david.save(), blogPost.save(), comment.save() ])
@@ -26,9 +26,21 @@ describe('Associations', () => {
 		User.findOne({ name: 'David' })
 			.populate('blogPosts')
 			.then((user) => {
-				console.log(user);
+				//console.log(user);
+				assert(user.blogPosts[0].title === 'JS is great');
 				done();
 			});
 	});
+
+	// it('saves a full relation graph', (done) => {
+	// 	User.findOne({ name: 'David' })
+	// 		.populate({
+	// 			path: 'blogPosts',
+	// 			populate: {
+	// 				path: 'comments'
+	// 			}
+	// 		});
+
+	// });
 
 });
