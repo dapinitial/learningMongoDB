@@ -7,7 +7,7 @@ describe('Reading users out of the database', () => {
 	beforeEach((done) => {
 		david = new User({name: 'David'});
 		david.save()
-			.then(() => done());
+		.then(() => done());
 	});
 
 	// FIND ALL USERS NAMED: DAVID
@@ -37,10 +37,10 @@ describe('Reading users out of the database', () => {
 
 	it('Find a user with a particular ID', (done) => {
 		User.findOne({ _id: david._id })
-			.then((user) => {
-				assert(user.name === 'David');
-				done();
-			});
+		.then((user) => {
+			assert(user.name === 'David');
+			done();
+		});
 	});
 
 });

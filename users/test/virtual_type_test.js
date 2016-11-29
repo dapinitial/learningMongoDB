@@ -4,16 +4,15 @@ const User = require('../src/user');
 describe('Virtual types', () => {
 	it('postCount returns number of posts', (done) => {
 		const david = new User({
-			name: 'David',
+			name: 'david',
 			posts: [{ title: 'PostTitle' }]
 		});
 
 		david.save()
-			.then(() => User.findOne({ name: 'David' }))
-			.then((user) => {
-				assert(david.postCount === 1);
-				done();
-			});
-			
+		.then(() => User.findOne({ name: 'David' }))
+		.then((user) => {
+			assert(david.postCount === 1);
+			done();
+		});
 	});
 });
