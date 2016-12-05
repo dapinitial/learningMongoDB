@@ -21,6 +21,6 @@ describe('Middleware', () => {
       .then((count) => {
         assert(count === 0);
         done();
-      })
+      });
   });
 });
