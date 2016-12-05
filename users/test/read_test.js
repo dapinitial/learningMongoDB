@@ -2,38 +2,26 @@ const assert = require('assert');
 const User = require('../src/user');
 
 describe('Reading users out of the database', () => {
-	let david;
-	
+	let david, anthony, puerto, gomez;
+
 	beforeEach((done) => {
 		david = new User({name: 'David'});
-		david.save()
-		.then(() => done());
-	});
+		anthony = new User({name: 'Anthony'});
+		puerto = new User({name: 'Puerto'});
+		gomez = new User({name: 'Gomez'});
 
-	// FIND ALL USERS NAMED: DAVID
+		Promise.all([puerto.save(), gomez.save(), david.save(), anthony.save()])
+			.then(() => done());
+	});
 
 	it('Finds all the users named David', (done) => {
 		User.find({ name: 'David' })
 		.then((users) => {
-			
-			// console.log(users);
-			
-			/** Gotcha with Mongo! The id's are the same but the type
-				* is different and fails a triple equals comparisson!
-				* MongoDB stores ids as ObjectId("5837c269c1d1c78c39b44cd5")
-				* but the ._id returns: 5837c269c1d1c78c39b44cd5
-				* try the two console logs below.
-				*/
 
-			// console.log(users[0]._id);
-			// console.log(david._id);	
-
-			assert(users[0]._id.toString() === david._id.toString())
+			assert(users[0]._id.toString() === david._id.toString());
 			done();
-		});		
+		});
 	});
-
-	// FIND A PARTICULAR RECORD
 
 	it('Find a user with a particular ID', (done) => {
 		User.findOne({ _id: david._id })
@@ -43,4 +31,18 @@ describe('Reading users out of the database', () => {
 		});
 	});
 
+	it('can skip and limit the result set', (done) => {
+		User.find({})
+			.sort({ name: -1 })
+			.skip(1)
+			.limit(2)
+			.then((users) => {
+				assert(users.length === 2);
+				assert(users[0].name === 'Puerto');
+				assert(users[1].name === 'David');
+				// assert(users[2].name === 'Puerto');
+				// assert(users[3].name === 'Gomez');
+				done();
+			});
+	});
 });
